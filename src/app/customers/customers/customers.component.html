@@ -1,0 +1,64 @@
+<div class="container w-100 text-center">
+   <h1 class="head-title pt-5">Route Front-end Task </h1>
+  <div class="container w-100 text-center">
+    <div class="row container mt-5 mb-5">
+      <div class="col-md-6">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search By Customer..." [(ngModel)]="searchTerm">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search By Transaction Amount..." [(ngModel)]="amountSearchTerm">
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="head-title fw-bold">#</th>
+            <th scope="col" class="head-title fw-bold">Name</th>
+            <th scope="col" class="head-title fw-bold">Total Amount</th>
+            <th scope="col" class="head-title fw-bold">Graph</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="Customers?.length > 0; else noDataFound">
+            <tr *ngFor="let customer of Customers | search:searchTerm">
+              <th scope="row">{{customer?.id}}</th>
+              <td>{{customer?.name}}</td>
+              <td>{{getTotalAmount(customer?.id)}}</td>
+              <td>
+                <button type="button" (click)="showCustomerChart(customer.id)" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#chartModal">
+                  <i class="fa-solid fa-chart-column"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #noDataFound>
+            <tr>
+              <th colspan="12"><i class="fa-solid fa-magnifying-glass px-3"></i> No Data Found</th>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<!-- Modal -->
+<div class="modal fade" id="chartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-chart-column text-warning px-3"></i> Chart</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-chart [transactions]="selectedTransactions"></app-chart>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
