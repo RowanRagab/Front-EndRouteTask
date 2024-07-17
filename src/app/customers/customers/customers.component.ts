@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/data.service';
+import { Customer } from 'src/app/interfaces/customer';
 
 @Component({
   selector: 'app-customers',
@@ -7,7 +8,7 @@ import { DataService } from 'src/app/data.service';
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
-  Customers: any;
+  Customers!: Customer[];
   transactions: any;
   searchTerm:string ='';
   amountSearchTerm:string ='';
@@ -23,6 +24,8 @@ export class CustomersComponent implements OnInit {
     this._dataService.getJsonData().subscribe((res: any) => {
       this.Customers = res?.customers;
       this.transactions = res?.transactions;
+      console.log(this.Customers);
+
     });
   }
   filterdAmount:any;
@@ -40,6 +43,6 @@ export class CustomersComponent implements OnInit {
     if (isNaN(searchTerm)) {
       return this.Customers;
     }
-    return this.Customers.filter((customer: { id: number; }) => this.getTotalAmount(customer.id) >= searchTerm);
+    return this.Customers?.filter((customer: { id: number; }) => this.getTotalAmount(customer.id) >= searchTerm);
   }
 }

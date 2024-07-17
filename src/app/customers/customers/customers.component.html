@@ -24,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="Customers?.length > 0; else noDataFound">
+          <ng-container *ngIf="(Customers?.length || 0) > 0; else noDataFound">
             <tr *ngFor="let customer of filterCustomersByAmount() | search:searchTerm">
               <th scope="row">{{customer?.id}}</th>
               <td>{{customer?.name}}</td>
