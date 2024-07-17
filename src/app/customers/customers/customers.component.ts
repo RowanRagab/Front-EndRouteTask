@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/data.service';
 import { Customer } from 'src/app/interfaces/customer';
+import { Transaction } from 'src/app/interfaces/transaction';
 
 @Component({
   selector: 'app-customers',
@@ -9,7 +10,7 @@ import { Customer } from 'src/app/interfaces/customer';
 })
 export class CustomersComponent implements OnInit {
   Customers!: Customer[];
-  transactions: any;
+  transactions!: Transaction[];
   searchTerm:string ='';
   amountSearchTerm:string ='';
   selectedTransactions: any[] = [];
@@ -24,8 +25,6 @@ export class CustomersComponent implements OnInit {
     this._dataService.getJsonData().subscribe((res: any) => {
       this.Customers = res?.customers;
       this.transactions = res?.transactions;
-      console.log(this.Customers);
-
     });
   }
   filterdAmount:any;
