@@ -35,4 +35,11 @@ export class CustomersComponent implements OnInit {
   showCustomerChart(customerId: number) {
     this.selectedTransactions = this.transactions?.filter((transaction: any) => transaction.customer_id === customerId) || [];
   }
+  filterCustomersByAmount(): any[] {
+    const searchTerm = parseFloat(this.amountSearchTerm);
+    if (isNaN(searchTerm)) {
+      return this.Customers;
+    }
+    return this.Customers.filter((customer: { id: number; }) => this.getTotalAmount(customer.id) >= searchTerm);
+  }
 }
